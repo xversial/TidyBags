@@ -1,250 +1,9 @@
-﻿/*
- * Tidy Bags v3.6.4.4 by LiquidAtoR
- *
- * This is a trivial little addon that will tidy up on-use items like Clams and
- * Borean Leather Scraps. It uses a stopwatch to stop it spamming Pulse() and
- * only runs when out of combat. Originally Created by Ryns.
- *
- * Credits to Ryns, MaiN, erenion, TIA, ShamWOW (Bobby53), Gilderoy, Samrick and Pasterke for their contributions
- * I would also like to thank everyone that has reported items that are added here in the list.
- *
- * 2014/11/30  v3.6.4.4
- *				Added fishing items as per request Proto (thanks for the code), code is added but for now deactivated (// in front of each item)
- *				Added missing items as per request Tayhatsu (thanks for the ID's)
- *				Added some dungeon rewards as per request jeppe64 and Ericane (thanks for the ID's)
- *
- * 2014/11/08  v3.6.4.3
- *				Added Nightmare Vine Stem and Mountain Silversage Stalk as per request tret
- *
- * 2014/11/01  v3.6.4.2
- *				Added items from WoD, thanks to thestephen for supplying the ID's
- *
- * 2014/10/26  v3.6.4.1
- *				Added fix from krad
- *
- * 2014/04/08  v3.6.4.0
- *              Added a few items as requested on forums.
- *              
- * 2013/10/20  v3.6.3.9
- *				Added Handful of Treats and Loot-Filled Pumpkin (Hallow's End Event) (ShortRound).
- *				Added Darkmoon Game Prize (MaxMuster)
- *				Added several items from Pandaria, Timeless Isle and the SoO raids.
- *
- * 2013/06/18  v3.6.3.8
- *              Added Serpent's Heart (Daily Cooldown for Jewelcrafting - MoP Edition)
- *
- * 2013/06/02  v3.6.3.7
- *              Added 5.3 items to the on-use lists (request by Proto, Zamphire and Kavlantis).
- *              Added a UseOnThree part (suggestion by Proto).
- *              Added Cracked Primal Egg (request by Laria).
- *              Added Kyparite Fragment, a few new ID's for older items and a all new Heroic Cache (Heroic Scenario Reward).
- *              Added the Gold container rewards for the Brawler Guild Fights.
- *
- * 2013/05/05  v3.6.3.6
- *              Added Stormtouched Cache (Nalak World Boss Consolidation Loot)
- *
- * 2013/04/25  v3.6.3.5
- *				Cleaned up to much without able to test it, thanks ubergoober for pointing it out.
- *
- * 2013/04/14  v3.6.3.4
- *				Changed the ID's to match the new 5.2 ID's for LFR bags (Thanks Laria for reporting 1 change).
- *
- * 2013/04/05  v3.6.3.3
- *				Added Mage Hunter Personal Effects (Tumbum request).
- *
- * 2013/04/03  v3.6.3.2
- *				Added Pandaria Herbs (Laria request) and Brightly Colored Egg (flying and csl5707 request).
- *
- * 2013/03/24  v3.6.3.1
- *				Added Shiny Pile of Refuse (Oondasta's Consolidation Loot)
- *
- * 2013/03/24  v3.6.3.0
- *				Added Cache of Sha-Touched Gold (LFR Loot).
- *
- * 2013/03/21  v3.6.2.9
- *				Added Mantid Archaeology items for packaging.
- *
- * 2013/03/13  v3.6.2.8
- *				Added Arcane Trove, Fortuitous Coffer and Treasures of the Thunder King (LFR Loot).
- *
- * 2013/02/13  v3.6.2.7
- *				Moved lovely charm to use on 10 section (was in the general list).
- *
- * 2012/12/30  v3.6.2.6
- *				Added attachment to Mail Events for plugin to run (MaxMuster Request).
- *
- * 2012/12/25  v3.6.2.5
- *				Added a luastring to enable AutoLoot on every startup of TidyBags.
- *
- * 2012/12/21  v3.6.2.4
- *				Added Water Snail to the destroy items list.
- *
- * 2012/12/16  v3.6.2.3
- *				Added Dividends of the Everlasting Spring (LFR Loot).
- *
- * 2012/12/09  v3.6.2.2
- *				Added Amber Encased Treasure Pouch (LFR Loot).
- *
- * 2012/12/03  v3.6.2.1
- *				Added Silkworm Cocoon (Tailoring Imperial Silk).
- *
- * 2012/12/03  v3.6.2.0
- *				Added Greater Cache of Treasures (Scenario Reward).
- *
- * 2012/12/02  v3.6.1.9
- *				Added Cache of Mogu Riches (LFR Loot).
- *
- * 2012/11/23  v3.6.1.8
- *				Added Marauder's Gleaming Sack of Gold and Pandaren Tea Set (Archaeology).
- *				Running a test with attachment to Loot Events for plugin to run.
- *				Added destroying of grey items (credits to Pasterke).
- *
- * 2012/11/18  v3.6.1.7
- *				Added a different check to see if there's skinnables around.
- *				TidyBags will (hopefully) not run while skinning.
- *
- * 2012/11/16  v3.6.1.6
- *				Added MoP Archaeology items to be crated.
- *				Some other stuff I forgot to write down ^^
- *
- * 2012/10/05  v3.6.1.5
- *				Added Treasures of the Vale and Sparkling Shards.
- *
- * 2012/10/02  v3.6.1.4
- *				Added Sealed Crate (MoP version).
- *
- * 2012/09/29  v3.6.1.3
- *				Added few MoP items like Plump Intestines, Mote of Harmony,
- *				Cache of Treasures, Plundered Treasure, Good Fortune and Skyshards.
- *
- * 2012/09/24  v3.6.1.2
- *				Even more silly copy/paste faulty thingy.
- *
- * 2012/09/24  v3.6.1.1
- *				Re-added Strange Bloated Stomach (copy/paste faulty thingy).
- *
- * 2012/09/20  v3.6.1.0
- *				Separated items to each own list according to amounts (Samrick).
- *				Latest API changes for state of bot changed in the code.
- *
- * 2012/09/18  v3.6.0.0
- *              Applied suggested codechanges by Samrick.
- *              Temporary commented out the Styx.CommonBot.LootTargeting.LootMobs because it always returns true.
- *				This is a API flaw, since it should only return true on lootable mobs around.
- *
- * 2012/09/16  v3.5.5.1
- *              Removed references to Styx.Combat as they have been removed from the API and
- *              caused compiler errors on startup of HB.
- *
- * 2012/09/08  v3.5.5.0
- *              Adding and updating for the new API changes (Which are numerous).
- *              Also started to add requested items from the forum thread which are in-game already.
- *
- * 2012/08/28  v3.5.1.0
- *              Testing extra delays between looting corpses and activating TidyBags scripts to prevent lootbug.
- *
- * 2012/03/06  v3.5.0.8
- *              Added Sealed Crate (Darkmoon Faire Fishing) and Lovely Charm (Love is in the Air event).
- *
- * 2012/01/28  v3.5.0.7
- *              Added Canopic Jar on request of Laria.
- *              Sorted the list numerically (streamlining).
- *
- * 2011/12/26  v3.5.0.6
- *              Added Pouch and Sack o' Coins (Darkmoon Fair) on request of Laria.
- *              Added Lucky Red Envelopes (Lunar Festival Elder reward).
- *
- * 2011/12/26  v3.5.0.5
- *              Added the DragonSoul geodes on request of Laria.
- *              Added Jewelcrafting Daily Cooldowns (Brilliant Glass, Icy Prism and Fire Prism).
- *
- * 2011/11/22  v3.5.0.0
- *              Testing StyxWoW.SleepForLagDuration(); with Tidybags instead of hardcoded delays.
- *
- * 2011/10/20  v3.1.2.2
- *              Increased sleep time for special cases (Croga reported still lootbug).
- *              Added a break when loottime passes 6 seconds.
- *
- * 2011/10/19  v3.1.2.1
- *              Added Tiny Treasure Chest to the special handlers (SBS and HS) as it's soulbound too.
- *              (as reported by Inrego).
- *
- * 2011/10/19  v3.1.2.0
- *              Added accounting for player's lag while opening soulbound containers.
- *              Which could possibly prevent the lootbug appear for SBS and Hidden Stash.
- *
- * 2011/10/19  v3.1.1.3
- *              Added the CloseLoot command to the lua line for Soulbound items to use.
- *
- * 2011/10/19  v3.1.1.2
- *              Added the Hidden Stash to the same code as Strange Bloated Stomache (Lua wise).
- *              Seems that it's soulbound bags and items that are opened are the possible problem.
- *
- * 2011/10/18  v3.1.1.1
- *              Cleaned up the Strange Bloated Stomache lootcode.
- *
- * 2011/10/07  v3.1.1.0
- *              First attempt to a possible fix for the Bloated Stomach issue.
- *              This issue is reported by several people, but I can't reproduce it.
- *
- * 2011/08/30  v3.1.0.5
- *              Added Satchel of Exotic Mysteries (Level 85 LFD reward for performing missing roles in the group).
- *
- * 2011/08/27  v3.1.0.4
- *              Added Slimy Bag a per request Laria.
- *
- * 2011/06/02  v3.1.0.2
- *              Too hasty with adding stuff. Corrected as reported by Tomei.
- *
- * 2011/06/02  v3.1.0.1
- *              Added Satchels of Helpful Goods as reported by TheBuster.
- *              Added a extra satchel which was missing from the list.
- *              Added Sludge-Covered Object as reported by BlackBook.
- *              Added Hidden Stash as reported by tjhasty.
- *
- * 2011/02/02  v3.1.0.0
- *              Changed some behaviour regarding inventory checks (Only character inventory is checked now).
- *              Tested with latest test release (2.0.0.3895).
- *
- * 2010/12/28  v3.0.1.8
- *              Added the first Cataclysm Items (as reported and added by Maffyx).
- *              More items may possibly follow (when reported and tested).
- *
- * 2010/09/5   v3.0.0.0
- *              Reloaded Codebase and tested against HB 1.9.5.9 and AutoAngler9007. Success!!
- *              Added Oozing Bag and many Fished Items to the itemlist.
- *              More items may possibly follow (when reported and tested).
- *
- * 2010/06/11   v2.1.0.0 - Gilderoy update
- *              Removed the Lua code spam now the check for quantities is done internaly.
- *              Added a little log of the operation bone by the plugin.
- *
- * 2010/04/25   v2.0.0.0
- *              Adapted Code to HB2 Beta (LiquidAtoR).
- *
- * 2010/01/21   v1.3.1.0
- *              Added more items to the list, tried resolve problem with Jaggal Clam opening.
- *
- * 2009/12/26   v1.3.0.0
- *              Added more items to the list, added hack for motes & eternals.
- *
- * 2009/12/26   v1.2.0.0
- *              Added more items to the list.
- *
- * 2009/12/26   v1.1.0.0
- *              Fix for error "Missing reagent: Borean Leather Scraps" if you
- *              have >1 but <5 in your bags.
- *
- * 2009/12/26   v1.0.0.0
- *              First release of the plugin, seems to work for me!
- *
- */
-namespace PluginTidyBags3
+﻿namespace PluginTidyBags3
 {
     using Styx;
     using Styx.Common;
     using Styx.Common.Helpers;
-	using Styx.CommonBot;
+    using Styx.CommonBot;
     using Styx.CommonBot.Frames;
     using Styx.CommonBot.Inventory;
     using Styx.CommonBot.Profiles;
@@ -252,19 +11,19 @@ namespace PluginTidyBags3
     using Styx.Pathing;
     using Styx.Plugins;
     using Styx.WoWInternals;
-	using Styx.WoWInternals.Misc;
-	using Styx.WoWInternals.World;
+    using Styx.WoWInternals.Misc;
+    using Styx.WoWInternals.World;
     using Styx.WoWInternals.WoWObjects;
 
     using System;
     using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.Data;
+    using System.ComponentModel;
+    using System.Data;
     using System.Diagnostics;
     using System.Drawing;
     using System.IO;
     using System.Linq;
-	using System.Reflection;
+    using System.Reflection;
     using System.Runtime.InteropServices;
     using System.Text;
     using System.Threading;
@@ -274,12 +33,12 @@ namespace PluginTidyBags3
 
     public class TidyBags3 : HBPlugin
     {
-        public override string Name { get { return "Tidy Bags 3.6 Reloaded"; } }
-        public override string Author { get { return "LiquidAtoR"; } }
-        public override Version Version { get { return new Version(3,6,4,4); } }
-		public bool InventoryCheck = false;
-		private bool _init;
-		
+        public override string Name { get { return "Tidy Bags 4"; } }
+        public override string Author { get { return "Xversial"; } }
+        public override Version Version { get { return new Version(3, 6, 4, 4); } }
+        public bool InventoryCheck = false;
+        private bool _init;
+
         private void LootFinished(object sender, LuaEventArgs args)
         {
             if (InventoryCheck == false)
@@ -287,14 +46,328 @@ namespace PluginTidyBags3
                 InventoryCheck = true;
             }
         }
-		
-		private void MailboxFinished(object sender, LuaEventArgs args)
+
+        private void MailboxFinished(object sender, LuaEventArgs args)
         {
             if (InventoryCheck == false)
             {
                 InventoryCheck = true;
             }
         }
+
+        private HashSet<uint> _artifactPowerItems = new HashSet<uint>()
+        {
+            141888, // Discarded Aristocrat's Censer
+            127999, // Shard of Potentiation
+            128021, // Scroll of Enlightenment
+            128022, // Treasured Coin
+            128026, // Trembling Phylactery
+            134118, // Cluster of Potentiation
+            134133, // Jewel of Brilliance
+            138726, // Shard of Potentiation
+            138732, // History of the Blade
+            138781, // Brief History of the Aeons
+            138782, // Brief History of the Ages
+            138783, // Glittering Memento
+            138784, // Questor's Glory
+            138785, // Adventurer's Resounding Glory
+            138786, // Talisman of Victory
+            138812, // Adventurer's Wisdom
+            138813, // Adventurer's Resounding Renown
+            138814, // Adventurer's Renown
+            138816, // Adventurer's Glory
+            138839, // Valiant's Glory
+            138864, // Skirmisher's Advantage
+            138865, // Gladiator's Triumph
+            138880, // Soldier's Grit
+            138881, // Soldier's Glory
+            138885, // Treasure of the Ages
+            138886, // Favor of Valajar
+            139413, // Greater Questor's Glory
+            139506, // Greater Glory of the Order
+            139507, // Cracked Vrykul Insignia
+            139508, // Dried Worldtree Seeds
+            139509, // Worldtree Bloom
+            139510, // Black Rook Soldier's Insignia
+            139511, // Hallowed Runestone
+            139512, // Sigilstone of Tribute
+            139608, // Brittle Spelltome
+            139609, // Depleted Cadet's Wand
+            139610, // Musty Azsharan Grimoire
+            139611, // Primitive Roggtotem
+            139612, // Highmountain Mystic's Totem
+            139613, // Tale-Teller's Staff
+            139614, // Azsharan Manapearl
+            139615, // Untapped Mana Gem
+            139616, // Dropper of Nightwell Liquid
+            139617, // Ancient Warden Manacles
+            140176, // Accolade of Victory
+            140237, // Iadreth's Enchanted Birthstone
+            140238, // Scavenged Felstone
+            140241, // Enchanted Moonfall Text
+            140244, // Jandvick Jarl's Pendant Stone
+            140247, // Mornath's Enchanted Statue
+            140250, // Ingested Legion Stabilizer
+            140251, // Purified Satyr Totem
+            140252, // Tel'anor Ancestral Tablet
+            140254, // The Seawarden's Beacon
+            140255, // Enchanted Nightborne Coin
+            140304, // Activated Essence
+            140305, // Brimming Essence
+            140306, // Mark of the Valorous
+            140307, // Heart of Zin-Azshari
+            140310, // Crude Statuette
+            140322, // Trainer's Insight
+            140349, // Spare Arcane Ward
+            140372, // Ancient Artificer's Manipulator
+            140381, // Jandvick Jarl's Ring, and Finger
+            140384, // Azsharan Court Scepter
+            140386, // Inquisitor's Shadow Orb
+            140388, // Falanaar Gemstone
+            140396, // Friendly Brawler's Wager
+            140409, // Tome of Dimensional Awareness
+            140410, // Mark of the Rogues
+            140421, // Ancient Qiraji Idol
+            140422, // Moonglow Idol
+            140444, // Dream Tear
+            140445, // Arcfruit
+            140517, // Glory of the Order
+            140685, // Enchanted Sunrunner Kidney
+            140847, // Ancient Workshop Focusing Crystal
+            141023, // Seal of Victory
+            141024, // Seal of Leadership
+            141310, // Falanaar Crescent
+            141313, // Manafused Fal'dorei Egg Sac
+            141314, // Treemender's Beacon
+            141383, // Crystallized Moon Drop
+            141384, // Emblem of the Dark Covenant
+            141385, // Tidestone Sliver
+            141386, // Giant Pearl Scepter
+            141387, // Emerald Bloom
+            141388, // Warden's Boon
+            141389, // Stareye Gem
+            141390, // The Corruptor's Totem
+            141391, // Ashildir's Unending Courage
+            141392, // Fragment of the Soulcage
+            141393, // Onyx Arrowhead
+            141394, // Plume of the Great Eagle
+            141395, // Stonedark's Pledge
+            141396, // The River's Blessing
+            141397, // The Spiritwalker's Wisdom
+            141398, // Blessing of the Watchers
+            141399, // Overcharged Stormscale
+            141400, // Underking's Fist
+            141401, // Renewed Lifeblood
+            141402, // Odyn's Watchful Gaze
+            141403, // Tablet of Tyr
+            141404, // Insignia of the Second Command
+            141405, // Senegos' Favor
+            141638, // Falanaar Scepter
+            141639, // Falanaar Orb
+            141667, // Ancient Keeper's Brooch
+            141668, // The Arcanist's Codex
+            141669, // Fel-Touched Tome
+            141670, // Arcane Trap Power Core
+            141671, // Moon Guard Focusing Stone
+            141672, // Insignia of the Nightborne Commander
+            141673, // Love-Laced Arrow
+            141674, // Brand of a Blood Brother
+            141675, // Deepwater Blossom
+            141676, // The Valewatcher's Boon
+            141677, // Key to the Bazaar
+            141678, // Night Devint: The Perfection of Arcwine
+            141679, // Cobalt Amber Crystal
+            141680, // Titan-Forged Locket
+            141681, // Valewalker Talisman
+            141682, // Free Floating Ley Spark
+            141683, // Mana-Injected Chronarch Power Core
+            141684, // Residual Manastorm Energy
+            141685, // The Valewalker's Blessing
+            141689, // Jewel of Victory
+            141690, // Symbol of Victory
+            141699, // Boon of the Companion
+            141701, // Selfless Glory
+            141702, // Spoiled Manawine Dregs
+            141703, // Witch-Harpy Talon
+            141704, // Forgotten Offering
+            141705, // Disorganized Ravings
+            141706, // Carved Oaken Windchimes
+            141707, // Smuggled Magical Supplies
+            141708, // Curio of Neltharion
+            141709, // Ancient Champion Effigy
+            141710, // Discontinued Suramar City Key
+            141711, // Ancient Druidic Carving
+            141852, // Accolade of Heroism
+            141853, // Accolade of Myth
+            141854, // Accolade of Achievement
+            141855, // History of the Aeons
+            141856, // History of the Ages
+            141857, // Soldier's Exertion
+            141858, // Soldier's Worth
+            141859, // Soldier's Splendor
+            141863, // Daglop's Precious
+            141872, // Artisan's Handiwork
+            141876, // Soul-Powered Containment Unit
+            141877, // Coura's Ancient Scepter
+            141883, // Azsharan Keepsake
+            141886, // Crackling Dragonscale
+            141887, // Lucky Brulstone
+            128000, // Crystal of Ensoulment
+            141889, // Glory of the Melee
+            141890, // Petrified Acorn
+            141921, // Dessicated Blue Dragonscale
+            141922, // Brulstone Fishing Sinker
+            141923, // Petrified Axe Haft
+            141924, // Broken Control Mechanism
+            141925, // Pruned Nightmare Shoot
+            141926, // Druidic Molting
+            141927, // Burrowing Worm Mandible
+            141928, // Reaver's Harpoon Head
+            141929, // Hippogryph Plumage
+            141930, // Smolderhide Spirit Beads
+            141931, // Tattered Farondis Heraldry
+            141932, // Shard of Compacted Energy
+            141933, // Citrine Telemancy Index
+            141934, // Partially Enchanted Nightborne Coin
+            141935, // Enchrgled Mlrgmlrg of Enderglment
+            141936, // Petrified Fel-Heart
+            141937, // Eredari Ignition Crystalkd
+            141940, // Starsong's Bauble
+            141941, // Crystallized Sablehorn Antler
+            141942, // Managazer's Petrifying Eye
+            141943, // Moon Guard Power Gem
+            141944, // Empowered Half-Shell
+            141945, // Magically-Fortified Vial
+            141946, // Trident of Sashj'tar
+            141947, // Mark of Lunastre
+            141948, // Token of a Master Cultivator
+            141949, // Everburning Arcane Glowlamp
+            141950, // Arcane Seed Case
+            141951, // Spellbound Jewelry Box
+            141952, // Delving Deeper by Arcanist Perclanea
+            141953, // Nightglow Energy Vessel
+            141954, // 'Borrowed' Highborne Magi's Chalice
+            141955, // Corupted Duskmere Crest
+            141956, // Rotten Spellbook
+            142001, // Antler of Cenarius
+            142002, // Dragonscale of the Earth Aspect
+            142003, // Talisman of the Ascended
+            142004, // Nar'thalas Research Tome
+            142005, // Vial of Diluted Nightwell Liquid
+            142006, // Ceremonial Warden Glaive
+            142007, // Omnibus: The Schools of Arcane Magic
+            142054, // Enchanted Nightborne Coin
+            132361, // Petrified Arkhana
+            130144, // Crystallized Fey Darter Egg
+            130159, // Ravencrest Shield
+            130160, // Vial of Pure Moonrest Water
+            130165, // Heathrow Keepsake
+            131728, // Urn of Malgalor's Blood
+            131753, // Prayers to the Earthmother
+            131758, // Oversized Acorn
+            131778, // Woodcarved Rabbit
+            131784, // Left Half of a Locket
+            131785, // Right Half of a Locket
+            131789, // Handmade Mobile
+            131808, // Engraved Bloodtotem Armlet
+            130153, // Godafoss Essence
+            132923, // Hrydshal Etching
+            130149, // Carved Smolderhide Figurines
+            130152, // Condensed Light of Elune
+            131763, // Bundle of Trueshot Arrows
+            131795, // Nar'thalasian Corsage
+            131802, // Offering to Ram'Pag
+            131751, // Fractured Portal Shard
+            132950, // Petrified Snake
+            141891, // Branch of Shaladrassil
+            141892, // Gilbert's Finest
+            141896, // Nashal's Spyglass
+            132897, // Mandate of the Watchers
+            138480, // Black Harvest Tome
+            138487, // Shinfel's Staff of Torment
+            140357, // Fel Lava Rock
+            140358, // Eredar Armor Clasp
+            140359, // Darkened Eyeball
+            140361, // Pulsating Runestone
+            140364, // Frostwyrm Bone Fragment
+            140365, // Dried Stratholme Lily
+            140366, // Scarlet Hymnal
+            140367, // Tattered Sheet Music
+            140368, // Tarnished Engagement Ring
+            140369, // Scrawled Recipe
+            140370, // Amber Shard
+            140371, // Letter from Exarch Maladaar
+            140373, // Ornamented Boot Strap
+            140374, // Jagged Worgen Fang
+            140377, // Broken Medallion of Karabor
+            140379, // Broken Warden Glaive Blade
+            140380, // Swiftflight's Tail Feather
+            140382, // Tiny War Drum
+            140383, // Glowing Cave Mushroom
+            140385, // Legion Pamphlet
+            140387, // Bracer Gemstone
+            140389, // Petrified Flame
+            140391, // Argussian Diamond
+            140392, // Safety Valve
+            140393, // Repentia's Whip
+            140459, // Moon Lily
+            140460, // Thisalee's Fighting Claws
+            140532, // Inscribed Vrykul Runestone
+            140462, // Draketaming Spurs
+            140463, // Broken Eredar Blade
+            140466, // Corroded Eternium Rose
+            140467, // Fel-Infused Shell
+            140468, // Eagle Eggshell Fragment
+            140469, // Felslate Arrowhead
+            140470, // Ancient Gilnean Locket
+            140471, // Lord Shalzaru's Relic
+            140473, // Night-forged Halberd
+            140474, // Nar'thalas Pottery Fragment
+            140475, // Morning Glory Vine
+            140476, // Astranaar Globe
+            140477, // Inert Ashes
+            140478, // Painted Bark
+            140479, // Broken Legion Communicator
+            140480, // Drained Construct Core
+            140481, // Shimmering Hourglass
+            140482, // Storm Drake Fang
+            140484, // Well-Used Drinking Horn
+            140485, // Duskpelt Fang
+            140486, // Storm Drake Scale
+            140487, // War-Damaged Vrykul Helmet
+            140488, // Huge Blacksmith's Hammer
+            140489, // Ettin Toe Ring
+            140490, // Wooden Snow Shoes
+            140491, // Stolen Pearl Ring
+            140492, // Gleaming Glacial Pebble
+            140494, // Eredar Tail-Cuff
+            140497, // Bundle of Tiny Spears
+            140498, // Legion Admirer's Note
+            140503, // Blank To-Do List
+            140504, // Kvaldir Anchor Line
+            140505, // Sweaty Bandanna
+            140507, // Unlabeled Potion
+            140508, // Nightborne Artificer's Ring
+            140509, // Demon-Scrawled Drawing
+            140510, // Iron Black Rook Hold Key
+            140511, // Soul Shackle
+            140512, // Oversized Drinking Mug
+            140513, // Dreadlord's Commendation
+            140516, // Elemental Bracers
+            140518, // Bottled Lightning
+            140519, // Whispering Totem
+            140520, // Amethyst Geode
+            140521, // Fire Turtle Shell Fragment
+            140522, // Petrified Spiderweb
+            140523, // Crimson Cavern Mushroom
+            140524, // Sharp Twilight Tooth
+            140525, // Obsidian Mirror
+            140528, // Dalaran Wine Glass
+            140529, // Felstalker's Ring
+            140530, // Opalescent Shell
+            140531, // Ravencrest Family Seal
+            140461  // Battered Trophy
+        };
 
         private HashSet<uint> _itemUseOnOne = new HashSet<uint>() {
             3352, // Ooze-covered Bag
@@ -467,7 +540,7 @@ namespace PluginTidyBags3
             74252, // Small Ethereal Shard
             52720  // Small Heavenly Shard
         };
-		
+
         private HashSet<uint> _itemUseOnFive = new HashSet<uint>() {
 //			111671, // Enormous Abyssal Gulper Eel
 //			111601, // Enormous Crescent Saberfish
@@ -590,7 +663,7 @@ namespace PluginTidyBags3
  			112693, // Frostweed Seed
 			112694  // Fireweed Seed
         };
-		
+
         private HashSet<uint> _itemUseOnTwenty = new HashSet<uint>() {
             111659, // Small Abyssal Gulper Eel
             111589, // Small Crescent Saberfish
@@ -643,9 +716,9 @@ namespace PluginTidyBags3
 			98560, // Arcane Trove (Vendor Version Alliance)
 			98562  // Sunreaver Bounty (Vendor Version Horde)
         };
-		
-		private HashSet<uint> _destroyItems = new HashSet<uint>() {
-			19221, // Darkmoon Special Reserve
+
+        private HashSet<uint> _destroyItems = new HashSet<uint>() {
+            19221, // Darkmoon Special Reserve
 			19222, // Cheap Beer
 			19223, // Darkmoon Dog
 			19224, // Red Hot Wings
@@ -677,53 +750,71 @@ namespace PluginTidyBags3
 
         public override void Pulse()
         {
-            if (!_init) {
-            base.OnEnable();
-			Lua.DoString("SetCVar('AutoLootDefault','1')");
-			Lua.Events.AttachEvent("LOOT_CLOSED", LootFinished);
-			Lua.Events.AttachEvent("MAIL_CLOSED", MailboxFinished);
-            Logging.Write(LogLevel.Normal, Colors.DarkRed, "TidyBags 3.6 ready for use...");
-            _init = true;
-            }
-			
-		if (_init)
-            if (StyxWoW.Me.IsActuallyInCombat
-                || StyxWoW.Me.Mounted
-                || StyxWoW.Me.IsDead
-                || StyxWoW.Me.IsGhost
-                ) {
-                return;
+            if (!_init)
+            {
+                base.OnEnable();
+                Lua.DoString("SetCVar('AutoLootDefault','1')");
+                Lua.Events.AttachEvent("LOOT_CLOSED", LootFinished);
+                Lua.Events.AttachEvent("MAIL_CLOSED", MailboxFinished);
+                Logging.Write(LogLevel.Normal, Colors.DarkRed, "TidyBags 3.6 ready for use...");
+                _init = true;
             }
 
-            if (InventoryCheck) { // Loot Event has Finished
-                foreach (WoWItem item in ObjectManager.GetObjectsOfType<WoWItem>()) { // iterate over every item
-                    if (item != null && item.BagSlot != -1 && StyxWoW.Me.FreeNormalBagSlots >= 2) { // check if item exists and is in bag and we have space
-                        if (_itemUseOnOne.Contains(item.Entry)) { // stacks of 1
-                            if (item.StackCount >= 1) {
+            if (_init)
+                if (StyxWoW.Me.IsActuallyInCombat
+                    || StyxWoW.Me.Mounted
+                    || StyxWoW.Me.IsDead
+                    || StyxWoW.Me.IsGhost
+                    )
+                {
+                    return;
+                }
+
+            if (InventoryCheck)
+            { // Loot Event has Finished
+                foreach (WoWItem item in ObjectManager.GetObjectsOfType<WoWItem>())
+                { // iterate over every item
+                    if (item != null && item.BagSlot != -1 && StyxWoW.Me.FreeNormalBagSlots >= 2)
+                    { // check if item exists and is in bag and we have space
+                        if (_itemUseOnOne.Contains(item.Entry) || _artifactPowerItems.Contains(item.Entry))
+                        { // stacks of 1
+                            if (item.StackCount >= 1)
+                            {
                                 this.useItem(item);
                             }
-						} else if (_itemUseOnThree.Contains(item.Entry)) { // stacks of 3
-                            if (item.StackCount >= 3) {
+                        }
+                        else if (_itemUseOnThree.Contains(item.Entry))
+                        { // stacks of 3
+                            if (item.StackCount >= 3)
+                            {
                                 this.useItem(item);
                             }
-						} else if (_itemUseOnFive.Contains(item.Entry)) { // stacks of 5
-                            if (item.StackCount >= 5) {
+                        }
+                        else if (_itemUseOnFive.Contains(item.Entry))
+                        { // stacks of 5
+                            if (item.StackCount >= 5)
+                            {
                                 this.useItem(item);
                             }
-                        } else if (_itemUseOnTen.Contains(item.Entry)) { // stacks of 10
-                            if (item.StackCount >= 10) {
+                        }
+                        else if (_itemUseOnTen.Contains(item.Entry))
+                        { // stacks of 10
+                            if (item.StackCount >= 10)
+                            {
                                 this.useItem(item);
                             }
-//                        } else if (_itemUseOnTwenty.Contains(item.Entry)) { // stacks of 20
-//                            if (item.StackCount >= 20) {
-//                                this.useItem(item);
-//                            }
-						} else if (_destroyItems.Contains(item.Entry)) {
-								this.destroyItem(item);
-						}
+                            //                        } else if (_itemUseOnTwenty.Contains(item.Entry)) { // stacks of 20
+                            //                            if (item.StackCount >= 20) {
+                            //                                this.useItem(item);
+                            //                            }
+                        }
+                        else if (_destroyItems.Contains(item.Entry))
+                        {
+                            this.destroyItem(item);
+                        }
                     }
                 }
-				InventoryCheck = false;
+                InventoryCheck = false;
                 StyxWoW.SleepForLagDuration();
             }
         }
@@ -731,8 +822,9 @@ namespace PluginTidyBags3
         private void useItem(WoWItem item)
         {
             Logging.Write(LogLevel.Normal, Colors.DarkRed, "[{0} {1}]: Using {2} we have {3}", this.Name, this.Version, item.Name, item.StackCount);
-			
-            if (_itemRequiresSleep.Contains(item.Entry)) {
+
+            if (_itemRequiresSleep.Contains(item.Entry))
+            {
                 // some (soulbound) items require an additional sleep to prevent a loot bug
                 StyxWoW.SleepForLagDuration();
             }
@@ -740,12 +832,12 @@ namespace PluginTidyBags3
             StyxWoW.SleepForLagDuration();
         }
 
-		private void destroyItem(WoWItem item) 
-		{
-			Logging.Write(LogLevel.Normal, Colors.DarkRed, "[{0} {1}]: Destroying {2} we have {3}", this.Name, this.Version, item.Name, item.StackCount);
-			item.PickUp();
-			Lua.DoString("DeleteCursorItem()");
-			StyxWoW.SleepForLagDuration();
-		}
+        private void destroyItem(WoWItem item)
+        {
+            Logging.Write(LogLevel.Normal, Colors.DarkRed, "[{0} {1}]: Destroying {2} we have {3}", this.Name, this.Version, item.Name, item.StackCount);
+            item.PickUp();
+            Lua.DoString("DeleteCursorItem()");
+            StyxWoW.SleepForLagDuration();
+        }
     }
 }
